@@ -2,44 +2,44 @@ import os
 import re
 import numpy as np 
 import datetime
-import pandas as pd 
+#import pandas as pd 
 
 import requests 
 from bs4 import BeautifulSoup
 
-def main():
-    client = ICSDClient("YOUR_USERNAME", "YOUR_PASSWORD")
+# def main():
+#     client = ICSDClient("YOUR_USERNAME", "YOUR_PASSWORD")
 
-    search_dict = {"collectioncode": "1-5000"}
+#     search_dict = {"collectioncode": "1-5000"}
 
-    search = client.advanced_search(search_dict, 
-             property_list=["CollectionCode", "StructuredFormula","CalculatedDensity","MeasuredDensity","CellVolume"])
+#     search = client.advanced_search(search_dict, 
+#              property_list=["CollectionCode", "StructuredFormula","CalculatedDensity","MeasuredDensity","CellVolume"])
     
-    data=[]
+#     data=[]
     
-    for i,item in enumerate(search):  
-        data.append([int(item[0]),int(item[1][0]),item[1][1],item[1][2],item[1][3],item[1][4]])
+#     for i,item in enumerate(search):  
+#         data.append([int(item[0]),int(item[1][0]),item[1][1],item[1][2],item[1][3],item[1][4]])
     
     
-    pd_data=pd.DataFrame(data,columns=['DB_id','Col_code','name','cal_density', 'meas_density','cellvolume'])
+#     pd_data=pd.DataFrame(data,columns=['DB_id','Col_code','name','cal_density', 'meas_density','cellvolume'])
     
-    pd_data.to_csv('densities.csv',index=True)
+#     pd_data.to_csv('densities.csv',index=True)
             
 
-    # search_dict = {"collectioncode": "1-100"}
+#     # search_dict = {"collectioncode": "1-100"}
 
-    # search = client.advanced_search(search_dict)
-    # cifs = client.fetch_cifs(search)
+#     # search = client.advanced_search(search_dict)
+#     # cifs = client.fetch_cifs(search)
 
-    # x = client.search("Li O")
-    # cifs = client.fetch_cifs(search)
+#     # x = client.search("Li O")
+#     # cifs = client.fetch_cifs(search)
 
-    # client.fetch_all_cifs()
+#     # client.fetch_all_cifs()
     
-    # cif = client.fetch_cif(1)
-    # client.writeout(cif)
+#     # cif = client.fetch_cif(1)
+#     # client.writeout(cif)
 
-    client.logout()
+#     client.logout()
 
 class ICSDClient():
     def __init__(self, login_id=None, password=None, windows_client=False, timeout=15):
@@ -72,9 +72,11 @@ class ICSDClient():
 
         if response.status_code == 200:
             self.auth_token = response.headers['ICSD-Auth-Token']
-            if verbose: print(f"Authentication succeeded. Your Auth Token for this session is {self.auth_token} which will expire in one hour. Please remember to call client.logout() when you have finished.")
+            if verbose:
+                print(f"Authentication succeeded. Your Auth Token for this session is {self.auth_token} which will expire in one hour. Please remember to call client.logout() when you have finished.")
         else:
-            if verbose: print(response.content)
+            if verbose:
+                print(response.content)
         
         self.session_history.append(response)
 
@@ -87,7 +89,8 @@ class ICSDClient():
         }
 
         response = requests.get('https://icsd.fiz-karlsruhe.de/ws/auth/logout', headers=headers)
-        if verbose: print(response.content)
+        if verbose:
+            print(response.content)
 
         self.session_history.append(response)
 

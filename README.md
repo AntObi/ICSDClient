@@ -6,9 +6,9 @@ A python interface for accessing the ICSD API Client with the requests library. 
 Clone the repository to a local directory and install the dependencies (recommendation is inside a python virtual environment)
 
 ```bash
-git clone https://github.com/lrcfmd/ICSDClient/
+git clone https://github.com/AntObi/ICSDClient/
 cd ICSDClient
-pip install -r requirements.txt
+pip install -e .
 ```
 
 ## Basic Usage 
@@ -16,6 +16,7 @@ pip install -r requirements.txt
 First instantiate a client object with the username and password provided by Fitz-Karlsruhe
 
 ```python
+from icsdclient.client import ICSDClient
 client = ICSDClient("YOUR_USERNAME", "YOUR_PASSWORD")
 ```
 
